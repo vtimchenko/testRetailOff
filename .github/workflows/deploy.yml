@@ -26,7 +26,7 @@ jobs:
 
       - name: Build Web
         # ЗАМІНІТЬ retail_off НА НАЗВУ ВАШОГО РЕПОЗИТОРІЮ
-        run: flutter build web --base-href "/vtimchenko/testRetailOff/" --release
+        run: flutter build web --base-href "/testRetailOff/" --release
 
       - name: Deploy to GitHub Pages
         uses: Peaceiris/actions-gh-pages@v3
