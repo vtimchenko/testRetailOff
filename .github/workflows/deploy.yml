@@ -1,0 +1,35 @@
+name: Deploy PWA to GitHub Pages
+
+on:
+  push:
+    branches: [ main ] # або master, залежно від вашої головної гілки
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build Web
+        # ЗАМІНІТЬ retail_off НА НАЗВУ ВАШОГО РЕПОЗИТОРІЮ
+        run: flutter build web --base-href "/vtimchenko/testRetailOff/" --release
+
+      - name: Deploy to GitHub Pages
+        uses: Peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
